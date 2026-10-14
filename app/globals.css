@@ -1,26 +1,120 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-cream: #f4efe6;
+  --color-cream-deep: #e9e1d3;
+  --color-beige: #d8cbb4;
+  --color-ink: #2a2118;
+  --color-ink-soft: #5a4a3a;
+  --color-ocean: #2f5f7f;
+  --color-orange: #d8743b;
+  --color-paper: #fbf6ee;
+
+  --font-sans: var(--font-afacad);
+  --font-display: var(--font-italiana);
+  --font-script: var(--font-la-belle-aurore);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-cream: var(--color-cream);
+  --color-cream-deep: var(--color-cream-deep);
+  --color-beige: var(--color-beige);
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-ocean: var(--color-ocean);
+  --color-orange: var(--color-orange);
+  --color-paper: var(--color-paper);
+
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-script: var(--font-script);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-wrap: break-word;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ocean);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.texture-bg {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--color-cream);
+}
+
+.texture-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/Assets/Textures/Padr%C3%A3o%20brinde%204k.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.texture-bg > * {
+  position: relative;
+  z-index: 1;
+}
+
+.paper-card {
+  background: var(--color-paper);
+  box-shadow: 0 1px 0 rgba(42, 33, 24, 0.06), 0 18px 40px -30px rgba(42, 33, 24, 0.45);
+}
+
+.rotate-deco-1 { transform: rotate(-6deg); }
+.rotate-deco-2 { transform: rotate(8deg); }
+.rotate-deco-3 { transform: rotate(-12deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .rotate-deco-1,
+  .rotate-deco-2,
+  .rotate-deco-3 {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
