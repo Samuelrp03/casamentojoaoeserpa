@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const heroImage = "/Assets/Images/Hero.png";
+const heroImageDesktop = "/Assets/Images/Hero.png";
+const heroImageMobile = "/Assets/Images/Hero Mobile.png";
 const arrowDown = "/Assets/Icons/Arrow%20down.svg";
 
 export function Hero() {
@@ -15,13 +16,22 @@ export function Hero() {
         Casamento de João Henrique Camargos e Vitoria Serpa Fernandes
       </h1>
       <Image
-        src={heroImage}
+        src={heroImageMobile}
         alt="Fotografia de João e Serpa"
         fill
         priority
         fetchPriority="high"
         sizes="100vw"
-        className="object-cover object-top"
+        className="block object-cover object-top sm:hidden"
+      />
+      <Image
+        src={heroImageDesktop}
+        alt="Fotografia de João e Serpa"
+        fill
+        priority
+        fetchPriority="high"
+        sizes="100vw"
+        className="hidden object-cover object-top sm:block"
       />
 
       <div
