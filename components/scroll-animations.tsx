@@ -6,6 +6,7 @@ import { animate } from "animejs";
 type RevealOptions = {
   x?: [number, number];
   y?: [number, number];
+  scale?: [number, number];
   stagger?: number;
 };
 
@@ -31,11 +32,12 @@ export function ScrollAnimations() {
       elements.forEach((element, index) => {
         const startX = options.x?.[0] ?? 0;
         const startY = options.y?.[0] ?? 0;
+        const startScale = options.scale?.[0] ?? 1;
         const staggerDelay = (options.stagger ?? 0) * index;
 
         const hide = () => {
           element.style.opacity = "0";
-          element.style.transform = `translate(${startX}px, ${startY}px)`;
+          element.style.transform = `translate(${startX}px, ${startY}px) scale(${startScale})`;
         };
 
         hide();
@@ -58,7 +60,8 @@ export function ScrollAnimations() {
                   opacity: [0, 1],
                   translateX: options.x ?? [0, 0],
                   translateY: options.y ?? [0, 0],
-                  duration: 850,
+                  scale: options.scale ?? [1, 1],
+                  duration: 800,
                   delay: staggerDelay,
                   easing: "easeOutCubic",
                 });
@@ -80,7 +83,8 @@ export function ScrollAnimations() {
                   opacity: [1, 0],
                   translateX: [0, startX],
                   translateY: [0, startY],
-                  duration: 850,
+                  scale: [1, startScale],
+                  duration: 800,
                   delay: staggerDelay,
                   easing: "easeInCubic",
                   onComplete: hide,
@@ -107,41 +111,51 @@ export function ScrollAnimations() {
       // Seção do casal
       {
         selector: '[data-anim="couple-title"]',
-        y: isDesktop ? [0, 0] : [40, 0],
+        y: isDesktop ? [0, 0] : [20, 0],
       },
       {
         selector: '[data-anim="couple-left"]',
         x: isDesktop ? [-70, 0] : [0, 0],
-        y: isDesktop ? [0, 0] : [40, 0],
+        y: isDesktop ? [0, 0] : [20, 0],
       },
       {
         selector: '[data-anim="couple-right"]',
         x: isDesktop ? [70, 0] : [0, 0],
-        y: isDesktop ? [0, 0] : [40, 0],
+        y: isDesktop ? [0, 0] : [20, 0],
       },
 
       // Seção de informações do casamento
       {
         selector: '[data-anim="info-title"]',
         x: isDesktop ? [-60, 0] : [0, 0],
-        y: isDesktop ? [0, 0] : [40, 0],
+        y: isDesktop ? [0, 0] : [20, 0],
       },
       {
         selector: '[data-anim="info-item"]',
         x: isDesktop ? [-50, 0] : [0, 0],
-        y: isDesktop ? [0, 0] : [35, 0],
-        stagger: 130,
+        y: isDesktop ? [0, 0] : [20, 0],
+        stagger: isDesktop ? 130 : 80,
+      },
+      {
+        selector: '[data-anim="info-note"]',
+        y: isDesktop ? [0, 0] : [20, 0],
+        scale: isDesktop ? [1, 1] : [0.98, 1],
+      },
+      {
+        selector: '[data-anim="info-map"]',
+        y: isDesktop ? [0, 0] : [16, 0],
+        stagger: isDesktop ? 0 : 60,
       },
 
       // Cartão e campos do RSVP
       {
         selector: '[data-anim="rsvp-card"]',
-        y: [60, 0],
+        y: isDesktop ? [60, 0] : [24, 0],
       },
       {
         selector: '[data-anim="rsvp-field"]',
-        y: isDesktop ? [0, 0] : [30, 0],
-        stagger: 110,
+        y: isDesktop ? [0, 0] : [16, 0],
+        stagger: isDesktop ? 110 : 80,
       },
     ];
 

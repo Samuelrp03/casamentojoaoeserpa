@@ -164,7 +164,7 @@ export function RsvpForm() {
             aria-required="true"
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? nameErrorId : undefined}
-            className="mt-2 w-full rounded-lg border border-beige bg-cream-deep px-4 py-3 text-ink placeholder:text-ink-soft/60 transition-colors focus:border-ocean focus:bg-paper focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-70"
+            className="mt-2 w-full rounded-lg border border-beige bg-cream-deep px-4 py-3 text-base text-ink placeholder:text-ink-soft/60 transition-colors focus:border-ocean focus:bg-paper focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-70 min-h-11"
             placeholder="Como devemos chamar você?"
           />
           {errors.name ? (
@@ -191,7 +191,7 @@ export function RsvpForm() {
               {errors.response}
             </p>
           ) : null}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             {RESPONSE_OPTIONS.map((option, index) => {
               const optionId = `${responseGroupId}-${option.value}`;
               const isChecked = values.response === option.value;
@@ -235,7 +235,7 @@ export function RsvpForm() {
             value={values.message}
             onChange={handleMessageChange}
             disabled={isSubmitting}
-            className="mt-2 w-full resize-y rounded-lg border border-beige bg-cream px-4 py-3 text-ink placeholder:text-ink-soft/60 transition-colors focus:border-ocean focus:bg-paper focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-70"
+            className="mt-2 w-full resize-y rounded-lg border border-beige bg-cream px-4 py-3 text-base text-ink placeholder:text-ink-soft/60 transition-colors focus:border-ocean focus:bg-paper focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-70"
             placeholder="Escreva aqui sua mensagem (opcional)."
           />
           <p className="mt-1 text-right text-xs text-ink-soft">
@@ -249,7 +249,7 @@ export function RsvpForm() {
           type="submit"
           disabled={isSubmitting}
           data-status={status}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ocean px-6 py-3 font-semibold text-cream transition-colors hover:bg-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean focus-visible:ring-offset-2 focus-visible:ring-offset-cream disabled:cursor-not-allowed disabled:bg-ink-soft disabled:text-cream/70"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ocean px-6 py-3 font-semibold text-cream transition-all duration-200 hover:bg-ink hover:scale-[1.01] active:scale-[0.995] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean focus-visible:ring-offset-2 focus-visible:ring-offset-cream disabled:cursor-not-allowed disabled:bg-ink-soft disabled:text-cream/70 disabled:hover:scale-100 disabled:active:scale-100 motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
         >
           {isSubmitting ? (
             <>
