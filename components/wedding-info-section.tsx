@@ -1,4 +1,7 @@
+import Image from "next/image";
 import { RsvpForm } from "@/components/rsvp-form";
+
+const noteImage = "/Assets/Images/Note Image.svg";
 
 function CalendarIcon({ className }: { className?: string }) {
   return (
@@ -66,62 +69,75 @@ export function WeddingInfoSection() {
   return (
     <section
       id="casamento"
-      className="texture-bg relative overflow-hidden bg-cream/90 py-12 sm:py-16 lg:py-20"
+      className="texture-bg relative overflow-hidden bg-cream/90 pb-12 sm:pb-16 lg:pb-20"
       aria-labelledby="casamento-titulo"
     >
 
-      <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
-        <h2
-          id="casamento-titulo"
-          data-anim="info-title"
-          className="font-script text-2xl text-orange sm:text-4xl"
-        >
-          Comemore conosco essa data tão especial
-        </h2>
+      <div className="mx-auto w-full max-w-7xl px-3 sm:px-6 lg:px-8 xl:px-10">
+        <figure className="relative mx-auto w-full" data-anim="info-note">
+          <Image
+            src={noteImage}
+            alt="Desenho de uma nota artesanal com borda laranja"
+            width={893}
+            height={556}
+            sizes="(max-width: 768px) 98vw, (max-width: 1024px) 98vw, (max-width: 1440px) 96vw, 1600px"
+            className="h-auto w-full"
+            priority={false}
+          />
+          <figcaption className="sr-only">Informações do casamento</figcaption>
+          <div className="absolute inset-0 flex flex-col lg:flex-row">
+            <div className="flex-col flex items-start justify-start py-14 pb-24 px-3 sm:px-8 lg:px-14 xl:px-20 2xl:px-24">
+              <h1 className="font-script text-4xl text-ink mb-8 text-start text-orange">
+                Faça parte da nossa história
+              </h1>
+              <ul className="space-y-3 sm:space-y-5 lg:space-y-6">
+                <li data-anim="info-item" className="flex items-start gap-3">
+                  <CalendarIcon className="mt-1 shrink-0 text-ocean" />
+                  <div>
+                    <p className="text-xl font-semibold uppercase tracking-[0.18em] text-ink-soft">
+                      Data
+                    </p>
+                    <p className="mt-1 text-2xl font-semibold text-ink">
+                      6 de fevereiro de 2027
+                    </p>
+                  </div>
+                </li>
 
-        <div className="mt-12 grid grid-cols-1 items-start gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
-          <div className="space-y-8">
-            <ul className="space-y-6">
-              <li data-anim="info-item" className="flex items-start gap-4">
-                <CalendarIcon className="mt-1 shrink-0 text-ocean" />
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-soft">
-                    Data
-                  </p>
-                  <p className="mt-1 text-xl font-semibold text-ink">
-                    6 de fevereiro de 2027
-                  </p>
-                </div>
-              </li>
+                <li data-anim="info-item" className="flex items-start gap-3">
+                  <ClockIcon className="mt-1 shrink-0 text-ocean" />
+                  <div>
+                    <p className="text-xl font-semibold uppercase tracking-[0.18em] text-ink-soft">
+                      Horário
+                    </p>
+                    <p className="mt-1 text-2xl font-semibold text-ink">
+                      A confirmar
+                    </p>
+                  </div>
+                </li>
 
-              <li data-anim="info-item" className="flex items-start gap-4">
-                <ClockIcon className="mt-1 shrink-0 text-ocean" />
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-soft">
-                    Horário
-                  </p>
-                  <p className="mt-1 text-xl font-semibold text-ink">
-                    A confirmar
-                  </p>
-                </div>
-              </li>
-
-              <li data-anim="info-item" className="flex items-start gap-4">
-                <LocationIcon className="mt-1 shrink-0 text-ocean" />
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-soft">
-                    Local
-                  </p>
-                  <p className="mt-1 text-xl font-semibold text-ink">
-                    A ser informado
-                  </p>
-                </div>
-              </li>
-            </ul>
+                <li data-anim="info-item" className="flex items-start gap-3">
+                  <LocationIcon className="mt-1 shrink-0 text-ocean" />
+                  <div>
+                    <p className="text-xl font-semibold uppercase tracking-[0.18em] text-ink-soft">
+                      Local
+                    </p>
+                    <p className="mt-1 text-2xl font-semibold text-ink">
+                      A ser informado
+                    </p>
+                  </div>
+                </li>
+              </ul>
+              <div data-anim="info-map" className="mt-8 w-full h-full lg:max-w-[98%] xl:max-w-full bg-orange rounded-lg p-4 sm:p-6 lg:p-8">
+                <p>Mapa aqui</p>
+              </div>
+            </div>
+            <div className="flex-1 flex items-start justify-center pr-12 py-12">
+              <div className="w-full max-w-[96%] lg:max-w-[98%] xl:max-w-full">
+                <RsvpForm />
+              </div>
+            </div>
           </div>
-
-          <RsvpForm />
-        </div>
+        </figure>
       </div>
     </section>
   );

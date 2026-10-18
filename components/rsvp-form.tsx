@@ -16,23 +16,33 @@ interface FormErrors {
   response?: string;
 }
 
-type SubmitStatus = "idle" | "submitting" | "not-connected" | "error";
+type SubmitStatus = "idle" | "submitting" | "success" | "error";
 
 const RESPONSE_OPTIONS: { value: ResponseValue; label: string }[] = [
   { value: "accept", label: "Aceito com alegria" },
   { value: "decline", label: "Declino com pesar" },
 ];
 
-/**
- * Placeholder for the future persistence integration.
- * There is no backend available in this step, so the request never
- * succeeds: the form demonstrates its loading state and then explains
- * that nothing has been stored.
- */
-async function submitRsvp(values: FormValues): Promise<{ ok: false }> {
-  void values;
-  await new Promise((resolve) => setTimeout(resolve, 700));
-  return { ok: false };
+async function submitRsvp(values: FormValues): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const response = await fetch("/api/rsvp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: values.name,
+        response: values.response,
+        message: values.message,
+      }),
+    });
+
+    const data = await response.json();
+    return data as { ok: boolean; error?: string };
+  } catch (error) {
+    console.error("Erro ao enviar RSVP:", error);
+    return { ok: false, error: "Erro ao enviar confirmação." };
+  }
 }
 
 export function RsvpForm() {
@@ -95,11 +105,9 @@ export function RsvpForm() {
     try {
       const result = await submitRsvp(values);
       if (result.ok) {
-        // Reserved for a future real integration. Kept intentionally unused
-        // until a backend exists, so no false success message is shown.
-        setStatus("not-connected");
+        setStatus("success");
       } else {
-        setStatus("not-connected");
+        setStatus("error");
       }
     } catch {
       setStatus("error");
@@ -125,7 +133,7 @@ export function RsvpForm() {
   return (
     <form
       data-anim="rsvp-card"
-      className="paper-card rounded-2xl p-6 sm:p-8"
+      className="rounded-2xl px-6 sm:px-8"
       onSubmit={handleSubmit}
       noValidate
       aria-labelledby={`${responseGroupId}-title`}
@@ -223,7 +231,7 @@ export function RsvpForm() {
             id={messageId}
             name="message"
             rows={4}
-            maxLength={500}
+            maxLength={256}
             value={values.message}
             onChange={handleMessageChange}
             disabled={isSubmitting}
@@ -231,7 +239,7 @@ export function RsvpForm() {
             placeholder="Escreva aqui sua mensagem (opcional)."
           />
           <p className="mt-1 text-right text-xs text-ink-soft">
-            {values.message.length}/500
+            {values.message.length}/256
           </p>
         </div>
       </div>
@@ -263,15 +271,13 @@ export function RsvpForm() {
         aria-live="polite"
         className="mt-4 min-h-[3.5rem]"
       >
-        {status === "not-connected" ? (
+        {status === "success" ? (
           <p
             role="alert"
-            className="rounded-lg border border-ocean/30 bg-ocean/5 px-4 py-3 text-sm leading-relaxed text-ink"
+            className="rounded-lg border border-green-500/30 bg-green-500/5 px-4 py-3 text-sm leading-relaxed text-ink"
           >
-            O envio ainda não está conectado: sua resposta não foi registrada.
-            Esta tela é uma demonstração do formulário. Quando a integração com
-            o serviço de armazenamento estiver disponível, a confirmação real
-            aparecerá aqui.
+            Sua confirmação de presença foi enviada com sucesso! Obrigado por
+            celebrar esse momento conosco.
           </p>
         ) : null}
         {status === "error" ? (

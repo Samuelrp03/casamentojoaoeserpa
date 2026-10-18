@@ -26,7 +26,7 @@ export function Hero() {
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-cream to-cream/0"
+        className="pointer-events-none absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-cream to-cream/0"
       />
       <Link
         href="#apresentacao"

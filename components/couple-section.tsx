@@ -6,15 +6,15 @@ export function CoupleSection() {
   return (
     <section
       id="apresentacao"
-      className="texture-bg relative overflow-hidden bg-cream"
+      className="texture-bg relative overflow-x-clip bg-cream"
       aria-labelledby="apresentacao-titulo"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 h-40 bg-gradient-to-t from-cream/0 to-cream"
+        className="pointer-events-none absolute inset-x-0 h-20 bg-gradient-to-t from-cream/0 to-cream"
       />
       
-      <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12 -mt-16 sm:-mt-20">
+      <div className="mx-auto max-w-6xl px-5 pt-10 sm:px-8 lg:px-12 -mt-16 sm:-mt-20">
         <h2
           id="apresentacao-titulo"
           data-anim="couple-title"
@@ -43,8 +43,8 @@ export function CoupleSection() {
           </article>
 
           <div
-            data-anim="couple-image"
-            className="relative order-first mx-auto aspect-[4/3] w-full max-w-2xl sticky bottom-0 lg:order-none lg:col-span-2"
+            data-anim="couple-illustration"
+            className="couple-illustration relative order-first mx-auto w-full max-w-2xl translate-y-2 lg:order-none lg:col-span-2"
           >
             <Image
               src={coupleImage}
