@@ -133,7 +133,7 @@ export function RsvpForm() {
   return (
     <form
       data-anim="rsvp-card"
-      className="rounded-2xl px-6 sm:px-8"
+      className="rounded-2xl px-6 py-6 sm:px-6 sm:py-8 lg:px-3 lg:py-10 bg-cream/95 backdrop-blur-sm shadow-sm lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none"
       onSubmit={handleSubmit}
       noValidate
       aria-labelledby={`${responseGroupId}-title`}
