@@ -22,6 +22,7 @@ export function CoupleSection() {
         >
           Quem são os noivos?
         </h2>
+        <h3 className="text-center text-sm text-ink">Por Samuel Rodrigues</h3>
 
         <div className="mt-8 grid grid-cols-1 gap-y-8 lg:mt-12 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-8">
           <article data-anim="couple-left" className="relative z-10 text-left lg:text-left order-1 lg:order-none">
