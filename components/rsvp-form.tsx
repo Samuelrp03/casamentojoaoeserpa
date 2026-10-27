@@ -2,6 +2,7 @@
 
 import { useRef, useState, useId } from "react";
 import type { FormEvent, ChangeEvent } from "react";
+import { GiftSelectionModal } from "@/components/gift-selection-modal";
 
 type ResponseValue = "accept" | "decline";
 
@@ -53,6 +54,7 @@ export function RsvpForm() {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<SubmitStatus>("idle");
+  const [showGiftModal, setShowGiftModal] = useState(false);
 
   const nameId = useId();
   const responseGroupId = useId();
@@ -105,7 +107,12 @@ export function RsvpForm() {
     try {
       const result = await submitRsvp(values);
       if (result.ok) {
-        setStatus("success");
+        if (values.response === "accept") {
+          setStatus("success");
+          setShowGiftModal(true);
+        } else {
+          setStatus("success");
+        }
       } else {
         setStatus("error");
       }
@@ -247,9 +254,15 @@ export function RsvpForm() {
       <div data-anim="rsvp-field" className="mt-6">
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || status === "success"}
           data-status={status}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ocean px-6 py-3 font-semibold text-cream transition-all duration-200 hover:bg-ink hover:scale-[1.01] active:scale-[0.995] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean focus-visible:ring-offset-2 focus-visible:ring-offset-cream disabled:cursor-not-allowed disabled:bg-ink-soft disabled:text-cream/70 disabled:hover:scale-100 disabled:active:scale-100 motion-reduce:transition-none motion-reduce:hover:scale-100 motion-reduce:active:scale-100"
+          className={`inline-flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3 font-semibold text-cream transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-cream disabled:cursor-not-allowed ${
+            status === "success"
+              ? "bg-green-600"
+              : status === "error"
+              ? "bg-orange hover:bg-orange/90 focus-visible:ring-orange"
+              : "bg-ocean hover:bg-ink hover:scale-[1.01] active:scale-[0.995] focus-visible:ring-ocean"
+          } ${status === "success" ? "disabled:opacity-100" : ""}`}
         >
           {isSubmitting ? (
             <>
@@ -259,6 +272,10 @@ export function RsvpForm() {
               />
               Enviando...
             </>
+          ) : status === "success" ? (
+            "Enviado"
+          ) : status === "error" ? (
+            "Tentar novamente"
           ) : (
             "Enviar resposta"
           )}
@@ -269,27 +286,20 @@ export function RsvpForm() {
         id={statusId}
         role="status"
         aria-live="polite"
-        className="mt-4 min-h-[3.5rem]"
+        className="mt-2 min-h-[1rem]"
       >
-        {status === "success" ? (
-          <p
-            role="alert"
-            className="rounded-lg border border-green-500/30 bg-green-500/5 px-4 py-3 text-sm leading-relaxed text-ink"
-          >
-            Sua confirmação de presença foi enviada com sucesso! Obrigado por
-            celebrar esse momento conosco.
-          </p>
-        ) : null}
         {status === "error" ? (
-          <p
-            role="alert"
-            className="rounded-lg border border-orange/40 bg-orange/5 px-4 py-3 text-sm leading-relaxed text-ink"
-          >
-            Não foi possível processar sua resposta agora. Verifique os campos
-            destacados e tente novamente.
+          <p role="alert" className="text-center text-sm text-orange">
+            Não foi possível processar sua resposta. Verifique os campos e tente novamente.
           </p>
         ) : null}
       </div>
+
+      <GiftSelectionModal
+        open={showGiftModal}
+        onClose={() => setShowGiftModal(false)}
+        onSkip={() => setShowGiftModal(false)}
+      />
     </form>
   );
 }
