@@ -1,4 +1,8 @@
+import Image from "next/image";
 import { RsvpForm } from "@/components/rsvp-form";
+
+const noteImageDesktop = "/Assets/Images/Note Image.svg";
+const noteImageMobile = "/Assets/Images/Note Mobile.svg";
 
 function CalendarIcon({ className }: { className?: string }) {
   return (
@@ -66,61 +70,85 @@ export function WeddingInfoSection() {
   return (
     <section
       id="casamento"
-      className="texture-bg relative overflow-hidden bg-cream/90 py-12 sm:py-16 lg:py-20"
+      className="texture-bg relative overflow-hidden bg-cream/90 pb-12 sm:pb-16 lg:pb-20"
       aria-labelledby="casamento-titulo"
     >
 
-      <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-12">
-        <h2
-          id="casamento-titulo"
-          data-anim="info-title"
-          className="font-script text-2xl text-orange sm:text-4xl"
-        >
-          Comemore conosco essa data tão especial
-        </h2>
+      <div className="mx-auto w-full max-w-7xl px-3 sm:px-6 lg:px-8 xl:px-10">
+        <div className="relative">
+          <figure className="relative mx-auto w-full" data-anim="info-note">
+          <Image
+            src={noteImageMobile}
+            alt="Desenho de uma nota artesanal com borda laranja"
+            width={540}
+            height={637}
+            sizes="(max-width: 1023px) 98vw, 0px"
+            className="block h-auto w-full lg:hidden"
+            priority={false}
+          />
+          <Image
+            src={noteImageDesktop}
+            alt="Desenho de uma nota artesanal com borda laranja"
+            width={893}
+            height={556}
+            sizes="(min-width: 1024px) (max-width: 1440px) 96vw, 1600px"
+            className="hidden h-auto w-full lg:block"
+            priority={false}
+          />
+          <figcaption className="sr-only">Informações do casamento</figcaption>
+          <div className="absolute inset-0 flex flex-col lg:flex-row"> 
+            <div className="flex flex-col items-start justify-start pl-16 pr-4 py-6 sm:pl-24 sm:pr-6 sm:py-8 md:pl-24 md:pr-8 md:py-10 lg:py-16 lg:pb-20 lg:px-14 xl:px-20 2xl:px-24 lg:w-1/2">
+              <h1 className="font-script text-2xl text-ink mb-4 text-start text-orange sm:text-3xl md:text-4xl lg:mb-8">
+                Faça parte da nossa história
+              </h1>
+              <ul className="space-y-3 sm:space-y-4 lg:space-y-6">
+                <li data-anim="info-item" className="flex items-start gap-2 sm:gap-3">
+                  <CalendarIcon className="mt-0.5 shrink-0 text-ocean sm:mt-1" />
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-soft sm:text-sm lg:text-base">
+                      Data
+                    </p>
+                    <p className="mt-0.5 text-base font-semibold text-ink sm:text-lg lg:text-2xl xl:text-3xl">
+                      6 de fevereiro de 2027
+                    </p>
+                  </div>
+                </li>
 
-        <div className="mt-12 grid grid-cols-1 items-start gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
-          <div className="space-y-8">
-            <ul className="space-y-6">
-              <li data-anim="info-item" className="flex items-start gap-4">
-                <CalendarIcon className="mt-1 shrink-0 text-ocean" />
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-soft">
-                    Data
-                  </p>
-                  <p className="mt-1 text-xl font-semibold text-ink">
-                    6 de fevereiro de 2027
-                  </p>
-                </div>
-              </li>
+                <li data-anim="info-item" className="flex items-start gap-2 sm:gap-3">
+                  <ClockIcon className="mt-0.5 shrink-0 text-ocean sm:mt-1" />
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-soft sm:text-sm lg:text-base">
+                      Horário
+                    </p>
+                    <p className="mt-0.5 text-base font-semibold text-ink sm:text-lg lg:text-2xl xl:text-3xl">
+                      A confirmar
+                    </p>
+                  </div>
+                </li>
 
-              <li data-anim="info-item" className="flex items-start gap-4">
-                <ClockIcon className="mt-1 shrink-0 text-ocean" />
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-soft">
-                    Horário
-                  </p>
-                  <p className="mt-1 text-xl font-semibold text-ink">
-                    A confirmar
-                  </p>
-                </div>
-              </li>
-
-              <li data-anim="info-item" className="flex items-start gap-4">
-                <LocationIcon className="mt-1 shrink-0 text-ocean" />
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-soft">
-                    Local
-                  </p>
-                  <p className="mt-1 text-xl font-semibold text-ink">
-                    A ser informado
-                  </p>
-                </div>
-              </li>
-            </ul>
+                <li data-anim="info-item" className="flex items-start gap-2 sm:gap-3">
+                  <LocationIcon className="mt-0.5 shrink-0 text-ocean sm:mt-1" />
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ink-soft sm:text-sm lg:text-base">
+                      Local
+                    </p>
+                    <p className="mt-0.5 text-base font-semibold text-ink sm:text-lg lg:text-2xl xl:text-3xl">
+                      A ser informado
+                    </p>
+                  </div>
+                </li>
+              </ul>
+              <div data-anim="info-map" className="mt-4 w-full h-full flex-1 rounded-lg bg-orange/90 p-3 text-sm text-cream sm:mt-6 sm:p-4 sm:text-base lg:mt-8 lg:max-w-xl xl:max-w-2xl lg:p-6">
+                <p>Mapa aqui</p>
+              </div>
+            </div>
           </div>
-
-          <RsvpForm />
+        </figure>
+        <div className="mx-auto mt-6 w-full max-w-2xl px-4 sm:px-6 lg:mt-0 lg:absolute lg:inset-y-0 lg:right-0 lg:flex lg:w-1/2 lg:max-w-none lg:items-center lg:justify-center lg:px-14 lg:py-16 xl:px-20 2xl:px-24">
+          <div className="w-full rounded-xl border border-beige bg-cream/95 shadow-sm backdrop-blur-sm lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none">
+            <RsvpForm />
+          </div>
+        </div>
         </div>
       </div>
     </section>

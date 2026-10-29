@@ -2,6 +2,7 @@
 
 import { useRef, useState, useId } from "react";
 import type { FormEvent, ChangeEvent } from "react";
+import { GiftSelectionModal } from "@/components/gift-selection-modal";
 
 type ResponseValue = "accept" | "decline";
 
@@ -16,23 +17,33 @@ interface FormErrors {
   response?: string;
 }
 
-type SubmitStatus = "idle" | "submitting" | "not-connected" | "error";
+type SubmitStatus = "idle" | "submitting" | "success" | "error";
 
 const RESPONSE_OPTIONS: { value: ResponseValue; label: string }[] = [
   { value: "accept", label: "Aceito com alegria" },
   { value: "decline", label: "Declino com pesar" },
 ];
 
-/**
- * Placeholder for the future persistence integration.
- * There is no backend available in this step, so the request never
- * succeeds: the form demonstrates its loading state and then explains
- * that nothing has been stored.
- */
-async function submitRsvp(values: FormValues): Promise<{ ok: false }> {
-  void values;
-  await new Promise((resolve) => setTimeout(resolve, 700));
-  return { ok: false };
+async function submitRsvp(values: FormValues): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const response = await fetch("/api/rsvp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: values.name,
+        response: values.response,
+        message: values.message,
+      }),
+    });
+
+    const data = await response.json();
+    return data as { ok: boolean; error?: string };
+  } catch (error) {
+    console.error("Erro ao enviar RSVP:", error);
+    return { ok: false, error: "Erro ao enviar confirmação." };
+  }
 }
 
 export function RsvpForm() {
@@ -43,6 +54,7 @@ export function RsvpForm() {
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<SubmitStatus>("idle");
+  const [showGiftModal, setShowGiftModal] = useState(false);
 
   const nameId = useId();
   const responseGroupId = useId();
@@ -95,11 +107,14 @@ export function RsvpForm() {
     try {
       const result = await submitRsvp(values);
       if (result.ok) {
-        // Reserved for a future real integration. Kept intentionally unused
-        // until a backend exists, so no false success message is shown.
-        setStatus("not-connected");
+        if (values.response === "accept") {
+          setStatus("success");
+          setShowGiftModal(true);
+        } else {
+          setStatus("success");
+        }
       } else {
-        setStatus("not-connected");
+        setStatus("error");
       }
     } catch {
       setStatus("error");
@@ -125,7 +140,7 @@ export function RsvpForm() {
   return (
     <form
       data-anim="rsvp-card"
-      className="paper-card rounded-2xl p-6 sm:p-8"
+      className="rounded-2xl px-6 py-6 sm:px-6 sm:py-8 lg:px-3 lg:py-10 bg-cream/95 backdrop-blur-sm shadow-sm lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none"
       onSubmit={handleSubmit}
       noValidate
       aria-labelledby={`${responseGroupId}-title`}
@@ -156,7 +171,7 @@ export function RsvpForm() {
             aria-required="true"
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? nameErrorId : undefined}
-            className="mt-2 w-full rounded-lg border border-beige bg-cream-deep px-4 py-3 text-ink placeholder:text-ink-soft/60 transition-colors focus:border-ocean focus:bg-paper focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-70"
+            className="mt-2 w-full rounded-lg border border-beige bg-cream-deep px-4 py-3 text-base text-ink placeholder:text-ink-soft/60 transition-colors focus:border-ocean focus:bg-paper focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-70 min-h-11"
             placeholder="Como devemos chamar você?"
           />
           {errors.name ? (
@@ -183,7 +198,7 @@ export function RsvpForm() {
               {errors.response}
             </p>
           ) : null}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             {RESPONSE_OPTIONS.map((option, index) => {
               const optionId = `${responseGroupId}-${option.value}`;
               const isChecked = values.response === option.value;
@@ -223,15 +238,15 @@ export function RsvpForm() {
             id={messageId}
             name="message"
             rows={4}
-            maxLength={500}
+            maxLength={256}
             value={values.message}
             onChange={handleMessageChange}
             disabled={isSubmitting}
-            className="mt-2 w-full resize-y rounded-lg border border-beige bg-cream px-4 py-3 text-ink placeholder:text-ink-soft/60 transition-colors focus:border-ocean focus:bg-paper focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-70"
+            className="mt-2 w-full resize-y rounded-lg border border-beige bg-cream px-4 py-3 text-base text-ink placeholder:text-ink-soft/60 transition-colors focus:border-ocean focus:bg-paper focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-70"
             placeholder="Escreva aqui sua mensagem (opcional)."
           />
           <p className="mt-1 text-right text-xs text-ink-soft">
-            {values.message.length}/500
+            {values.message.length}/256
           </p>
         </div>
       </div>
@@ -239,9 +254,15 @@ export function RsvpForm() {
       <div data-anim="rsvp-field" className="mt-6">
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={isSubmitting || status === "success"}
           data-status={status}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-ocean px-6 py-3 font-semibold text-cream transition-colors hover:bg-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ocean focus-visible:ring-offset-2 focus-visible:ring-offset-cream disabled:cursor-not-allowed disabled:bg-ink-soft disabled:text-cream/70"
+          className={`inline-flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3 font-semibold text-cream transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-cream disabled:cursor-not-allowed ${
+            status === "success"
+              ? "bg-green-600"
+              : status === "error"
+              ? "bg-orange hover:bg-orange/90 focus-visible:ring-orange"
+              : "bg-ocean hover:bg-ink hover:scale-[1.01] active:scale-[0.995] focus-visible:ring-ocean"
+          } ${status === "success" ? "disabled:opacity-100" : ""}`}
         >
           {isSubmitting ? (
             <>
@@ -251,6 +272,10 @@ export function RsvpForm() {
               />
               Enviando...
             </>
+          ) : status === "success" ? (
+            "Enviado"
+          ) : status === "error" ? (
+            "Tentar novamente"
           ) : (
             "Enviar resposta"
           )}
@@ -261,29 +286,20 @@ export function RsvpForm() {
         id={statusId}
         role="status"
         aria-live="polite"
-        className="mt-4 min-h-[3.5rem]"
+        className="mt-2 min-h-[1rem]"
       >
-        {status === "not-connected" ? (
-          <p
-            role="alert"
-            className="rounded-lg border border-ocean/30 bg-ocean/5 px-4 py-3 text-sm leading-relaxed text-ink"
-          >
-            O envio ainda não está conectado: sua resposta não foi registrada.
-            Esta tela é uma demonstração do formulário. Quando a integração com
-            o serviço de armazenamento estiver disponível, a confirmação real
-            aparecerá aqui.
-          </p>
-        ) : null}
         {status === "error" ? (
-          <p
-            role="alert"
-            className="rounded-lg border border-orange/40 bg-orange/5 px-4 py-3 text-sm leading-relaxed text-ink"
-          >
-            Não foi possível processar sua resposta agora. Verifique os campos
-            destacados e tente novamente.
+          <p role="alert" className="text-center text-sm text-orange">
+            Não foi possível processar sua resposta. Verifique os campos e tente novamente.
           </p>
         ) : null}
       </div>
+
+      <GiftSelectionModal
+        open={showGiftModal}
+        onClose={() => setShowGiftModal(false)}
+        onSkip={() => setShowGiftModal(false)}
+      />
     </form>
   );
 }

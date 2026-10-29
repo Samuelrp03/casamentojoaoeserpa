@@ -59,6 +59,21 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  position: relative;
+  isolation: isolate;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 2;
+  background-image: url("/Assets/Textures/Padr%C3%A3o%20brinde%204k.png");
+  background-repeat: repeat;
+  background-position: top center;
+  background-size: cover;
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: -2;
 }
 
 :focus-visible {
@@ -70,20 +85,7 @@ body {
 .texture-bg {
   position: relative;
   isolation: isolate;
-  background-color: var(--color-cream);
-}
-
-.texture-bg::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("/Assets/Textures/Padr%C3%A3o%20brinde%204k.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  opacity: 0.12;
-  pointer-events: none;
-  z-index: 0;
+  background-color: transparent;
 }
 
 .texture-bg > * {
@@ -94,6 +96,28 @@ body {
 .paper-card {
   background: var(--color-paper);
   box-shadow: 0 1px 0 rgba(42, 33, 24, 0.06), 0 18px 40px -30px rgba(42, 33, 24, 0.45);
+}
+
+/* Ilustração do casal: entra subindo com fade e permanece no fluxo do layout. */
+@keyframes couple-illustration-in {
+  from {
+    opacity: 0;
+    transform: translateY(56px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.couple-illustration {
+  animation: couple-illustration-in 1000ms ease-out 350ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .couple-illustration {
+    animation: none;
+  }
 }
 
 .rotate-deco-1 { transform: rotate(-6deg); }
