@@ -32,7 +32,7 @@ const laBelleAurore = localFont({
 export const metadata: Metadata = {
   title: "Casamento de João & Serpa",
   description:
-    "Convite digital do casamento de João Henrique Camargos e Vitoria Serpa Fernandes, em 6 de fevereiro de 2027. Confirme sua presença e deixe sua mensagem.",
+    "Convite digital do casamento de João Henrick Camargos e Vitoria Serpa Fernandes, em 6 de fevereiro de 2027. Confirme sua presença e deixe sua mensagem.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -26,7 +26,7 @@ export function CoupleSection() {
         <div className="mt-12 grid grid-cols-1 gap-y-10 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-8">
           <article data-anim="couple-left" className="relative z-10 text-left lg:text-left">
             <h3 className="font-display text-[clamp(1.75rem,4vw,2.75rem)] text-orange">
-              João Henrique Camargos
+              João Henrick Camargos
             </h3>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-ink sm:text-xl">
               Jornalista, cinéfilo e amante de jogos. João certamente é uma pessoa que vale a pena investir bons minutos em uma conversa, seja sobre filmes, videogame ou filosofia. Um grande comunicador e uma pessoa que consegue alegrar o clima de qualquer ambiente em instantes. <br /> <span className="font-bold">Um grande comunicador e um amigo melhor ainda.</span>
