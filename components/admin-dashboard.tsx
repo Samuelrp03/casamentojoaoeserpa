@@ -9,6 +9,7 @@ type Rsvp = {
   response: "accept" | "decline";
   message: string | null;
   created_at: string;
+  gift_name?: string | null;
 };
 
 export function AdminDashboard() {
@@ -135,6 +136,14 @@ export function AdminDashboard() {
                     {rsvp.response === "accept" ? "Aceitou" : "Declinou"}
                   </span>
                 </div>
+                {rsvp.response === "accept" && rsvp.gift_name && (
+                  <div className="rounded-lg border border-ocean/30 bg-ocean/5 px-3 py-2">
+                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-ocean mb-1">
+                      Presente escolhido
+                    </p>
+                    <p className="text-sm font-semibold text-ink">{rsvp.gift_name}</p>
+                  </div>
+                )}
                 <div>
                   <p className="text-sm font-medium text-ink mb-1">Mensagem</p>
                   {rsvp.message ? (

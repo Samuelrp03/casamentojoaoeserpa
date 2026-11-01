@@ -3,6 +3,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+type Reservation = {
+  id: number;
+  guest_name: string;
+  created_at: string;
+};
+
 type Gift = {
   id: number;
   name: string;
@@ -13,6 +19,7 @@ type Gift = {
   quantity_reserved: number;
   created_at: string;
   updated_at: string;
+  reservations?: Reservation[];
 };
 
 type GiftForm = {
@@ -226,6 +233,7 @@ export function AdminGiftsManager() {
               const reserved = Number(gift.quantity_reserved) || 0;
               const remaining = Math.max(needed - reserved, 0);
               const isComplete = needed > 0 && reserved >= needed;
+              const reservations = gift.reservations || [];
 
               return (
                 <article
@@ -280,6 +288,21 @@ export function AdminGiftsManager() {
                       <span className="text-ink-soft">Faltam</span>
                       <span className="font-semibold text-ink">{remaining}</span>
                     </div>
+                  </div>
+
+                  <div className="rounded-lg border border-beige bg-cream/80 p-3 space-y-2">
+                    <p className="text-sm font-semibold text-ink">Reservado por</p>
+                    {reservations.length > 0 ? (
+                      <ul className="space-y-1">
+                        {reservations.map((reservation) => (
+                          <li key={reservation.id} className="text-sm text-ink-soft">
+                            {reservation.guest_name}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-sm text-ink-soft">Nenhuma reserva</p>
+                    )}
                   </div>
 
                   <div className="flex flex-wrap gap-2">

@@ -15,6 +15,50 @@ async function isAuthenticated() {
   return session?.value === "authenticated";
 }
 
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    if (!(await isAuthenticated())) {
+      return NextResponse.json({ ok: false, error: "Não autorizado." }, { status: 401 });
+    }
+
+    const { id } = await params;
+    const pool = sql(process.env.DATABASE_URL!);
+    await pool.query(
+      `CREATE TABLE IF NOT EXISTS gift_reservations (
+        id SERIAL PRIMARY KEY,
+        gift_id INTEGER NOT NULL REFERENCES gifts(id) ON DELETE CASCADE,
+        guest_name TEXT NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      )`
+    );
+    const result = await pool.query(
+      `SELECT g.id, g.name, g.description, g.price, g.link, g.quantity_needed, g.quantity_reserved, g.created_at, g.updated_at,
+              COALESCE(
+                json_agg(
+                  json_build_object('id', gr.id, 'guest_name', gr.guest_name, 'created_at', gr.created_at)
+                  ORDER BY gr.created_at ASC
+                ) FILTER (WHERE gr.id IS NOT NULL),
+                '[]'
+              ) AS reservations
+       FROM gifts g
+       LEFT JOIN gift_reservations gr ON gr.gift_id = g.id
+       WHERE g.id = $1
+       GROUP BY g.id, g.name, g.description, g.price, g.link, g.quantity_needed, g.quantity_reserved, g.created_at, g.updated_at`,
+      [id]
+    );
+    await pool.end();
+
+    if (result.rows.length === 0) {
+      return NextResponse.json({ ok: false, error: "Presente não encontrado." }, { status: 404 });
+    }
+
+    return NextResponse.json({ ok: true, data: result.rows[0] });
+  } catch (error) {
+    console.error("Erro ao buscar presente:", error);
+    return NextResponse.json({ ok: false, error: "Erro ao buscar presente." }, { status: 500 });
+  }
+}
+
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     if (!(await isAuthenticated())) {

@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { RsvpForm } from "@/components/rsvp-form";
 
@@ -97,8 +99,8 @@ export function WeddingInfoSection() {
           />
           <figcaption className="sr-only">Informações do casamento</figcaption>
           <div className="absolute inset-0 flex flex-col lg:flex-row"> 
-            <div className="flex flex-col items-start justify-start pl-16 pr-4 py-6 sm:pl-24 sm:pr-6 sm:py-8 md:pl-24 md:pr-8 md:py-10 lg:py-16 lg:pb-20 lg:px-14 xl:px-20 2xl:px-24 lg:w-1/2">
-              <h1 className="font-script text-2xl text-ink mb-4 text-start text-orange sm:text-3xl md:text-4xl lg:mb-8">
+            <div className="flex flex-col items-start justify-start pl-16 pr-4 py-6 sm:pl-24 sm:pr-6 sm:py-8 md:pl-24 md:pr-8 md:py-10 lg:min-h-0 lg:w-1/2 lg:overflow-y-auto lg:overscroll-contain lg:px-14 lg:py-10 lg:pb-12 xl:px-20 2xl:px-24">
+              <h1 className="font-script text-2xl text-ink mb-4 text-start text-orange sm:text-3xl md:text-4xl lg:mb-6">
                 Faça parte da nossa história
               </h1>
               <ul className="space-y-3 sm:space-y-4 lg:space-y-6">
@@ -147,13 +149,13 @@ export function WeddingInfoSection() {
                 loading="lazy"
                 referrerPolicy="strict-origin-when-cross-origin"
                 title="Mapa do local do casamento - Restaurante Bacanas"
-                className="mt-4 h-40 w-full rounded-lg sm:h-48 lg:h-56"
+                className="mt-4 h-28 w-full rounded-lg sm:h-40 lg:h-40 xl:h-52 2xl:h-56"
               />
             </div>
           </div>
         </figure>
-        <div className="mx-auto mt-6 w-full max-w-2xl px-4 sm:px-6 lg:mt-0 lg:absolute lg:inset-y-0 lg:right-0 lg:flex lg:w-1/2 lg:max-w-none lg:items-center lg:justify-center lg:px-14 lg:py-16 xl:px-20 2xl:px-24">
-          <div className="w-full rounded-xl border border-beige bg-cream/95 shadow-sm backdrop-blur-sm lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none">
+        <div className="mx-auto mt-6 w-full max-w-2xl px-4 sm:px-6 lg:mt-0 lg:absolute lg:inset-y-0 lg:right-0 lg:flex lg:w-1/2 lg:max-w-none lg:items-center lg:justify-center lg:px-8 lg:py-10 xl:px-14 xl:py-12 2xl:px-20">
+          <div className="w-full rounded-xl border border-beige bg-cream/95 shadow-sm backdrop-blur-sm lg:flex lg:h-full lg:max-h-full lg:min-h-0 lg:flex-col lg:overflow-hidden lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none space-y-4">
             <RsvpForm />
           </div>
         </div>
