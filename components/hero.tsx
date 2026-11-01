@@ -13,7 +13,7 @@ export function Hero() {
       aria-label="Convite principal de João e Serpa"
     >
       <h1 className="sr-only">
-        Casamento de João Henrique Camargos e Vitoria Serpa Fernandes
+        Casamento de João Henrick Camargos e Vitoria Serpa Fernandes
       </h1>
       <Image
         src={heroImageMobile}

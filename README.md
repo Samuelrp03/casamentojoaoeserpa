@@ -1,6 +1,6 @@
 # Casamento João & Serpa
 
-Site oficial do casamento de João Henrique Camargos e Vitoria Serpa Fernandes, desenvolvido para apresentar o casal, compartilhar informações sobre a cerimônia e permitir que os convidados confirmem sua presença.
+Site oficial do casamento de João Henrick Camargos e Vitoria Serpa Fernandes, desenvolvido para apresentar o casal, compartilhar informações sobre a cerimônia e permitir que os convidados confirmem sua presença.
 
 ## 1. Objetivo do projeto
 
@@ -108,7 +108,7 @@ Essa estrutura é um planejamento inicial. Os componentes devem ser criados some
 
 ### Informações iniciais
 
-- Noivo: João Henrique Camargos.
+- Noivo: João Henrick Camargos.
 - Noiva: Vitoria Serpa Fernandes.
 - Data prevista: 6 de fevereiro de 2027.
 - Horário informado: 00:00, sujeito à confirmação.

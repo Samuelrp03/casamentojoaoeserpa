@@ -260,7 +260,7 @@ Utilize somente as informações confirmadas pelo usuário ou existentes em font
 
 Informações atualmente documentadas:
 
-- Noivo: João Henrique Camargos.
+- Noivo: João Henrick Camargos.
 - Noiva: Vitoria Serpa Fernandes.
 - Data prevista: 6 de fevereiro de 2027.
 - Horário informado: 00:00, ainda sujeito à confirmação.

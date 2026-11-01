@@ -109,7 +109,7 @@ export function WeddingInfoSection() {
                       Data
                     </p>
                     <p className="mt-0.5 text-base font-semibold text-ink sm:text-lg lg:text-2xl xl:text-3xl">
-                      6 de fevereiro de 2027
+                      30 de janeiro de 2027
                     </p>
                   </div>
                 </li>
@@ -121,7 +121,7 @@ export function WeddingInfoSection() {
                       Horário
                     </p>
                     <p className="mt-0.5 text-base font-semibold text-ink sm:text-lg lg:text-2xl xl:text-3xl">
-                      A confirmar
+                      10 horas da manhã
                     </p>
                   </div>
                 </li>
@@ -133,14 +133,22 @@ export function WeddingInfoSection() {
                       Local
                     </p>
                     <p className="mt-0.5 text-base font-semibold text-ink sm:text-lg lg:text-2xl xl:text-3xl">
-                      A ser informado
+                      Restaurante Bacanas
                     </p>
                   </div>
                 </li>
               </ul>
-              <div data-anim="info-map" className="mt-4 w-full h-full flex-1 rounded-lg bg-orange/90 p-3 text-sm text-cream sm:mt-6 sm:p-4 sm:text-base lg:mt-8 lg:max-w-xl xl:max-w-2xl lg:p-6">
-                <p>Mapa aqui</p>
-              </div>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d122318.71103206387!2d-49.314161714529696!3d-16.653863122104156!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935ef152546b521d%3A0x9bb6004b478f43ba!2sBacanas!5e0!3m2!1spt-BR!2sbr!4v1793504938697!5m2!1spt-BR!2sbr"
+                width="600"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
+                title="Mapa do local do casamento - Restaurante Bacanas"
+                className="mt-4 h-40 w-full rounded-lg sm:h-48 lg:h-56"
+              />
             </div>
           </div>
         </figure>
